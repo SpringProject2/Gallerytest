@@ -34,7 +34,7 @@ public class CyworldController {
 	}
 
 	// 사진첩 조회
-	@RequestMapping(value = { "/", "/list.do" })
+	@RequestMapping(value = { "/", "/gallery_list.do" })
 	public String list(Model model) {
 
 		List<GalleryVO> list = gallery_dao.selectList();
@@ -43,14 +43,14 @@ public class CyworldController {
 
 	}
 
-	@RequestMapping("/insert_form.do")
+	@RequestMapping("/gallery_insert_form.do")
 	public String insert_form() {
 		return Comm.VIEW_PATH + "gallery_insert_form.jsp";
 	}
 
 	//////////////////////////
 	// 새 글쓰기
-	@RequestMapping("/insert.do")
+	@RequestMapping("/gallery_insert.do")
 	// public String insert(String name, String content, String pwd) {
 	public String insert(GalleryVO vo) {
 
@@ -101,11 +101,24 @@ public class CyworldController {
 			int res = gallery_dao.insert(vo);
 			
 	        //redirect: view로 이동하는 것이 아닌, 컨트롤러의 url매핑을 호출하기 위한 키워드
-			return "redirect:list.do";
+			return "redirect:gallery_list.do";
+		}
+	
+	//새 댓글 추가
+	@RequestMapping("/gallery_insertcomment.do")
+	public String insertComment(GalleryVO vo) {
+		int res = gallery_dao.insertComment(vo);
+		String result = "{'result':'no'}";
+		if (res != 0) {
+			result = "{'result':'yes'}";
 		}
 
+		return result;
+	}
+	
+
 	// 게시글 삭제
-	@RequestMapping("/delete.do")
+	@RequestMapping("/gallery_delete.do")
 	@ResponseBody // Ajax로 요청된 메서드는 결과를 콜백메서드로 돌려주기 위해 반드시 @ResponseBody가 필요!!
 	public String delete(int galleryContentRef) {
 		// delete.do?idx=1
@@ -122,7 +135,7 @@ public class CyworldController {
 	}
 
 	// 글 수정 폼으로 전환
-	@RequestMapping("/modify_form.do")
+	@RequestMapping("/gallery_modify_form.do")
 	public String modify_form(Model model, int galleryContentRef) {
 		// modify_form.do?idx=2&pwd=1111&c_pwd=1111
 		GalleryVO vo = gallery_dao.selectOne(galleryContentRef);
@@ -136,7 +149,7 @@ public class CyworldController {
 	}
 
 	// 게시글 수정하기
-	@RequestMapping("/modify.do")
+	@RequestMapping("/gallery_modify.do")
 	@ResponseBody
 	public String modify(GalleryVO vo) {
 		
@@ -145,7 +158,6 @@ public class CyworldController {
 		System.out.println("경로 : " + savePath);
 
 		// 업로드를 위해 파라미터로 넘어온 사진의 정보
-		System.out.println(vo.getGalleryFile());
 		  MultipartFile galleryFile = vo.getGalleryFile();
 		  String galleryFileName = "no_file";
 		  System.out.println("1");
@@ -180,7 +192,6 @@ public class CyworldController {
 				}
 				
 			}
-			
 			vo.setGalleryFileName(galleryFileName);
 			
 			System.out.println("2");

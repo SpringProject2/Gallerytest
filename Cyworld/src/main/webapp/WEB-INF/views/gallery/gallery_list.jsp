@@ -19,7 +19,7 @@
 		}
 		
 		//idx를 Ajax를 통해서 서버로 전달
-		var url = "delete.do";
+		var url = "gallery_delete.do";
 		var param = "galleryContentRef=" + f.galleryContentRef.value;
 		//준비된 두 개의 정보를 콜백메서드로 전달
 		sendRequest( url, param, resultFn, "GET" );
@@ -47,17 +47,32 @@
 			}
 			
 			alert("삭제성공");
-			location.href="list.do";
+			location.href="gallery_list.do";
 		}
 	}
 	
 	//게시글 수정
 	function modify(f){
 		
-		f.action = 'modify_form.do';
+		f.action = 'gallery_modify_form.do';
 		f.method = "post";
 		f.submit();
 		
+	}
+	
+function reply(f){
+		
+		var galleryCommentContent = f.galleryCommentContent.value;
+		
+		//유효성 체크
+		if( galleryCommentContent == '' ){
+			alert("댓글을 입력해주세요.");
+			return;
+		}
+		
+		f.action = "gallery_insertComment.do";
+		f.method = "post";
+		f.submit();
 	}
 	
 </script>
@@ -89,14 +104,18 @@
 			작성일자 : ${ vo.galleryRegdate }<br>
 			</div>
 			
-			<!--  <div class="type_galleryLike"> 좋아요 : ${ vo.galleryLike }</div>
-			
+			<!--  <div class="type_galleryLike"> 좋아요 : ${ vo.galleryLike }</div>-->
+			<form method="post"> 
+			댓글 <input type="text" name="galleryCommentContent">
+			<input type = "button" value="글쓰기" onclick="reply(this.form)">
+			</form>
 			<div class="type_galleryComment"> 
-			댓글 작성자 : ${ vo.galleryCommentName } <br>
-			댓글 작성일자 : ${ vo.galleryCommentRegdate } <br>
-			댓글 내용 : ${ vo.galleryCommentContent }
+			NO. : ${ vo.galleryCommentRef } <br>
+			댓글 내용 : ${ vo.galleryCommentContent } <br>
+			댓글 작성일자 : ${ vo.galleryCommentRegdate }<br>
+			<input type="button" value="댓글삭제" onclick="del(this.form);">
 			</div>
-			-->
+			
 			
 			<form>
 			<input type="hidden" name="galleryContentRef" value="${ vo.galleryContentRef }">
@@ -110,7 +129,7 @@
 	
 		<div align="right">
 			<input type="button" value="글쓰기"
-			       onclick="location.href='insert_form.do'">
+			       onclick="location.href='gallery_insert_form.do'">
 		</div>
 	
 </body>

@@ -40,12 +40,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where galleryContentRef=#{galleryContentRef}
 	</update>
 	
+	<!-- 댓글추가 -->
+	
+	<insert id="galleryComment_insert" parameterType="gallery">
+		insert into GALLERYCOMMENT values(
+			seq_SignUp_idx.nextVal,
+			#{ galleryCommentContent },
+			SYSDATE
+        )
+	</insert>
+	
 	<!-- 좋아요 -->
 	<!-- <select id="findLike" resultType="int">
 		select count(*) from gallery where  
 	</select> -->
 	
-	<!-- 댓글수정 -->
+	<!-- 댓글추가 -->
 	<!--
 	<update id="galleryComment_update" parameterType="gallery">
 		update gallery set

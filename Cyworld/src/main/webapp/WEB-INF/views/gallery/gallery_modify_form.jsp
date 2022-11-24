@@ -14,10 +14,10 @@
 			//encodeURIComponent : 특수문자가 포함되어 있는 경우에 내용을 그대로 서버로 전달하기 위해
 			//존재하는 메서드
 			
-			var url = "modify.do";
+			var url = "gallery_modify.do";
 			var param = "galleryContentRef="+f.galleryContentRef.value +
 			            "&galleryContent="+ encodeURIComponent(f.galleryContent.value) +
-			            "&galleryFile=" + encodeURIComponent(f.galleryFile.value);
+			            "&galleryFileName=" + encodeURIComponent(f.galleryFileName.value);
 			sendRequest( url, param, sendCallback, "POST");
 			
 		}
@@ -37,7 +37,7 @@
 				}
 				
 				alert("수정성공");
-				location.href="list.do";
+				location.href="gallery_list.do";
 				
 			}
 			
@@ -64,13 +64,13 @@
 			
 			<tr>
 				<th>파일첨부</th>
-				<td><input type="file" name="galleryFile">${vo.galleryFileName}</td>
+				<td><input type="file" name="galleryFileName">${vo.galleryFileName}  </td>
 			</tr>
 			
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="수정" onclick="send(this.form);">
-					<input type="button" value="취소" onclick="location.href='list.do'">
+					<input type="button" value="취소" onclick="location.href='gallery_list.do'">
 				</td>
 			</tr>
 			

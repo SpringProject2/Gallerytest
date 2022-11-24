@@ -26,6 +26,17 @@ public class GalleryDAO {
 		return res;
 	}
 	
+	//새 댓글 추가
+	public int insertComment(GalleryVO vo) {
+		//맵퍼로 딱 한개의 객체만 넘겨줄 수 있다.
+		int res = sqlSession.insert("cw.galleryComment_insert", vo);
+		return res;
+	}
+	public GalleryVO selectOne1( int galleryCommentRef ) {
+		GalleryVO vo = sqlSession.selectOne("cw.gallery_one", galleryCommentRef);
+		return vo;
+	}
+	
 	//글 삭제
 	public int delete( int galleryContentRef ) {
 		int res = sqlSession.delete("cw.gallery_delete", galleryContentRef);

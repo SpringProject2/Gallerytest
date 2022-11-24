@@ -17,7 +17,7 @@
 			return;
 		}
 		
-		f.action = "insert.do";
+		f.action = "gallery_insert.do";
 		f.method = "post";
 		f.submit();
 	}
@@ -46,7 +46,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="글쓰기" onclick="send(this.form);">
-					<input type="button" value="취소" onclick="location.href='list.do'">
+					<input type="button" value="취소" onclick="location.href='gallery_list.do'">
 				</td>
 			</tr>
 		</table>
